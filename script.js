@@ -185,10 +185,12 @@ function changeSlide(cs, i) {
 // Arrow Handler
 backBtn.addEventListener('click', function () {
   previousSlide();
+  activateDots(currentSlideNum);
 })
 
 nextBtn.addEventListener('click', function () {
   nextSlide();
+  activateDots(currentSlideNum);
 })
 
 // Slide Key Handler
@@ -198,35 +200,41 @@ document.addEventListener('keydown', function (event) {
 })
 
 // Dots
+
 const createDots = () => {
-  dotsDiv.textContent = '';
-  slides.forEach((_, i) => {
-    const btnDot = document.createElement('button');
-    btnDot.classList.add('dot');
-    dotsDiv.appendChild(btnDot);
+  slides.forEach(() => {
+    const dot = `<button class="dot"></button>`;
+    dotsDiv.insertAdjacentHTML('beforeend', dot);
   })
 }
 
 createDots();
 
 // Activate Dots
-function activateDots(dot, currentSlideNum) {
+const dots = document.querySelectorAll('.dot');
+function activateDots(currentSlideNum) {
   dots.forEach(dot => {
-    dot.classList.remove('dot-active')
+    dot.classList.remove('dot-active');
   })
-  dot.classList.add('dot-active');
+  dots[currentSlideNum].classList.add('dot-active');
+}
+activateDots(currentSlideNum);
 
-  // Update Slide
+
+// Update Slide
+function updateSlide(currentSlideNum) {
   slides.forEach((slide, i) => {
     slide.style.transform = `translateX(${((i - currentSlideNum) * 100)}%)`;
   })
 }
 
 // Dot Handler
-const dots = document.querySelectorAll('.dot');
-dots.forEach((dot, i) => {
+dots.forEach((dot, currentSlideNum) => {
   dot.addEventListener('click', function (event) {
-    activateDots(event.target, i);
+    slides.forEach((slide, i) => {
+      slide.style.transform = `translateX(${((i - currentSlideNum) * 100)}%)`;
+    })
+    activateDots(currentSlideNum);
   })
 })
 

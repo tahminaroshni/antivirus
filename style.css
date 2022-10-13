@@ -522,6 +522,12 @@ body::-webkit-scrollbar-thumb {
   background-color: #777;
 }
 
+/* .dot-active-0,
+.dot-active-1,
+.dot-active-2 {
+  background-color: #777;
+} */
+
 .testimonial-title {
   font-size: 2.5rem;
   font-weight: 400;
